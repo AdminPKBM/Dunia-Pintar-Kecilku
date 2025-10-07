@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayo Baca - Belajar Membaca untuk PAUD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .bounce-in {
+            animation: bounceIn 0.8s ease-out;
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .pulse-big {
+            animation: pulseBig 0.6s ease-in-out;
+        }
+        
+        @keyframes pulseBig {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        
+        .rainbow-text {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 3s ease infinite;
+        }
+        
+        @keyframes rainbow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .highlight {
+            background-color: #fef08a;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .reading-text {
+            line-height: 2;
+            letter-spacing: 1px;
+        }
+        
+        .sparkle {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sparkle::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: sparkle 2s infinite;
+        }
+        
+        @keyframes sparkle {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .wiggle {
+            animation: wiggle 1s ease-in-out infinite;
+        }
+        
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+        }
+        
+        .bounce-gentle {
+            animation: bounceGentle 2s ease-in-out infinite;
+        }
+        
+        @keyframes bounceGentle {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+            to { box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.3); }
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .gradient-bg-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .gradient-bg-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-200 via-blue-200 to-purple-200 min-h-screen font-sans">
+    <div class="container mx-auto px-4 py-6">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="relative">
+                <h1 class="text-6xl font-bold rainbow-text mb-4 float">📖 Ayo Baca! 📚</h1>
+                <div class="absolute -top-2 -right-2 text-4xl wiggle">✨</div>
+                <div class="absolute -top-4 -left-4 text-3xl bounce-gentle">🌟</div>
+            </div>
+            <p class="text-2xl text-purple-700 font-semibold mb-4">Belajar membaca dengan mudah dan menyenangkan!</p>
+            
+            <!-- Pilihan Suara -->
+            <div class="bg-white rounded-3xl p-6 shadow-xl mb-6 max-w-4xl mx-auto">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">🎤 Pilih Suara AI</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <button onclick="selectVoice('wavenet-a')" id="voice-wavenet-a" class="voice-btn bg-pink-100 hover:bg-pink-200 text-pink-800 p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg border-4 border-pink-300">
+                        <div class="text-3xl mb-2">👩‍🦰</div>
+                        <div class="font-bold text-sm">Suara Wanita A</div>
+                        <div class="text-xs opacity-75">Google Cloud AI</div>
+                    </button>
+                    
+                    <button onclick="selectVoice('wavenet-b')" id="voice-wavenet-b" class="voice-btn bg-purple-100 hover:bg-purple-200 text-purple-800 p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <div class="text-3xl mb-2">👩‍🎓</div>
+                        <div class="font-bold text-sm">Suara Wanita B</div>
+                        <div class="text-xs opacity-75">Google Cloud AI</div>
+                    </button>
+                    
+                    <button onclick="selectVoice('wavenet-c')" id="voice-wavenet-c" class="voice-btn bg-blue-100 hover:bg-blue-200 text-blue-800 p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <div class="text-3xl mb-2">👨‍🏫</div>
+                        <div class="font-bold text-sm">Suara Pria C</div>
+                        <div class="text-xs opacity-75">Google Cloud AI</div>
+                    </button>
+                    
+                    <button onclick="selectVoice('wavenet-d')" id="voice-wavenet-d" class="voice-btn bg-green-100 hover:bg-green-200 text-green-800 p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <div class="text-3xl mb-2">👨‍💼</div>
+                        <div class="font-bold text-sm">Suara Pria D</div>
+                        <div class="text-xs opacity-75">Google Cloud AI</div>
+                    </button>
+                </div>
+                
+                <div class="mt-4 flex justify-center">
+                    <button onclick="testCurrentVoice()" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        🔊 Coba Suara: "Halo, aku siap membantu belajar membaca!"
+                    </button>
+                </div>
+            </div>
+            
+            <div class="flex justify-center space-x-4 text-3xl">
+                <span class="bounce-gentle" style="animation-delay: 0.1s">🎈</span>
+                <span class="bounce-gentle" style="animation-delay: 0.2s">🎨</span>
+                <span class="bounce-gentle" style="animation-delay: 0.3s">🎵</span>
+                <span class="bounce-gentle" style="animation-delay: 0.4s">🎪</span>
+            </div>
+        </div>
+
+        <!-- Menu Utama -->
+        <div id="mainMenu" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+            <div class="gradient-bg rounded-3xl p-8 shadow-xl card-hover cursor-pointer sparkle" onclick="showSection('syllables')">
+                <div class="text-center text-white">
+                    <div class="text-8xl mb-6 wiggle">🔤</div>
+                    <h3 class="text-3xl font-bold mb-4">Suku Kata</h3>
+                    <p class="text-lg opacity-90">Belajar membaca ba-bi-bu-be-bo</p>
+                    <div class="mt-4 text-2xl">🎯</div>
+                </div>
+            </div>
+            
+            <div class="gradient-bg-2 rounded-3xl p-8 shadow-xl card-hover cursor-pointer sparkle" onclick="showSection('words')">
+                <div class="text-center text-white">
+                    <div class="text-8xl mb-6 bounce-gentle">📝</div>
+                    <h3 class="text-3xl font-bold mb-4">Kata Sederhana</h3>
+                    <p class="text-lg opacity-90">Membaca kata-kata mudah</p>
+                    <div class="mt-4 text-2xl">🌟</div>
+                </div>
+            </div>
+            
+            <div class="gradient-bg-3 rounded-3xl p-8 shadow-xl card-hover cursor-pointer sparkle" onclick="showSection('sentences')">
+                <div class="text-center text-white">
+                    <div class="text-8xl mb-6 float">📄</div>
+                    <h3 class="text-3xl font-bold mb-4">Kalimat Pendek</h3>
+                    <p class="text-lg opacity-90">Membaca kalimat sederhana</p>
+                    <div class="mt-4 text-2xl">🎪</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bagian Suku Kata -->
+        <div id="syllables" class="hidden">
+            <div class="bg-white rounded-3xl p-8 shadow-xl mb-6">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-4xl font-bold text-blue-800">🔤 Belajar Suku Kata</h2>
+                    <button onclick="showSection('main')" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-full transition-colors text-lg">
+                        ← Kembali
+                    </button>
+                </div>
+                
+                <!-- Pilihan Huruf Konsonan -->
+                <div class="mb-8">
+                    <h3 class="text-2xl font-bold text-center text-blue-700 mb-6">Pilih Huruf Konsonan</h3>
+                    <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4" id="consonantButtons">
+                        <!-- Akan diisi oleh JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Tampilan Suku Kata -->
+                <div class="bg-blue-50 rounded-2xl p-8">
+                    <div class="text-center mb-6">
+                        <h3 class="text-3xl font-bold text-blue-800 mb-4">Suku Kata dengan "<span id="selectedConsonant">B</span>"</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-6" id="syllableGrid">
+                            <!-- Akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-8">
+                        <button onclick="readAllSyllables()" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors">
+                            🔊 Baca Semua
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bagian Kata Sederhana -->
+        <div id="words" class="hidden">
+            <div class="bg-white rounded-3xl p-8 shadow-xl mb-6">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-4xl font-bold text-green-800">📝 Kata Sederhana</h2>
+                    <button onclick="showSection('main')" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-full transition-colors text-lg">
+                        ← Kembali
+                    </button>
+                </div>
+                
+                <!-- Kategori Kata -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-red-50 rounded-2xl p-6">
+                        <h3 class="text-xl font-bold text-red-800 mb-4 text-center">🍎 Buah-buahan</h3>
+                        <div class="space-y-3" id="fruitWords">
+                            <!-- Akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="bg-yellow-50 rounded-2xl p-6">
+                        <h3 class="text-xl font-bold text-yellow-800 mb-4 text-center">🐱 Hewan</h3>
+                        <div class="space-y-3" id="animalWords">
+                            <!-- Akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="bg-green-50 rounded-2xl p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-4 text-center">🏠 Benda</h3>
+                        <div class="space-y-3" id="objectWords">
+                            <!-- Akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Latihan Membaca Kata -->
+                <div class="gradient-bg-2 rounded-3xl p-8 shadow-xl">
+                    <h3 class="text-3xl font-bold text-center text-white mb-8">🎯 Latihan Membaca</h3>
+                    <div class="text-center">
+                        <div class="bg-white rounded-3xl p-8 mb-6 shadow-lg glow">
+                            <div class="text-8xl mb-4 wiggle" id="wordEmoji">🍎</div>
+                            <div class="text-7xl font-bold text-purple-600 mb-4 reading-text" id="practiceWord">APEL</div>
+                        </div>
+                        <div class="flex justify-center gap-4 mb-6">
+                            <button onclick="readCurrentWord()" class="bg-white hover:bg-gray-100 text-purple-600 px-8 py-4 rounded-full text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                🔊 Dengar
+                            </button>
+                            <button onclick="nextPracticeWord()" class="bg-yellow-400 hover:bg-yellow-500 text-purple-800 px-8 py-4 rounded-full text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                ➡️ Kata Berikutnya
+                            </button>
+                        </div>
+                        <div class="text-2xl font-bold text-white bg-purple-600 rounded-full px-6 py-2 inline-block">
+                            Kata ke: <span id="wordCounter">1</span> ⭐
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bagian Kalimat Pendek -->
+        <div id="sentences" class="hidden">
+            <div class="bg-white rounded-3xl p-8 shadow-xl mb-6">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-4xl font-bold text-purple-800">📄 Kalimat Pendek</h2>
+                    <button onclick="showSection('main')" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-full transition-colors text-lg">
+                        ← Kembali
+                    </button>
+                </div>
+                
+                <!-- Daftar Kalimat -->
+                <div class="space-y-6 mb-8" id="sentencesList">
+                    <!-- Akan diisi oleh JavaScript -->
+                </div>
+                
+                <!-- Latihan Membaca Kalimat -->
+                <div class="gradient-bg-3 rounded-3xl p-8 shadow-xl">
+                    <h3 class="text-3xl font-bold text-center text-white mb-8">📖 Latihan Membaca Kalimat</h3>
+                    <div class="text-center">
+                        <div class="bg-white rounded-3xl p-8 mb-8 shadow-xl glow">
+                            <div class="text-4xl font-bold text-blue-600 reading-text leading-relaxed" id="practiceSentence">
+                                Ibu memasak di dapur
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                            <button onclick="readCurrentSentence()" class="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                🔊 Dengar Kalimat
+                            </button>
+                            <button onclick="readSentenceSlowly()" class="bg-yellow-400 hover:bg-yellow-500 text-blue-800 px-6 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                🐌 Baca Pelan
+                            </button>
+                            <button onclick="nextPracticeSentence()" class="bg-green-400 hover:bg-green-500 text-blue-800 px-6 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                ➡️ Kalimat Berikutnya
+                            </button>
+                        </div>
+                        <div class="text-2xl font-bold text-white bg-blue-600 rounded-full px-6 py-3 inline-block">
+                            Kalimat ke: <span id="sentenceCounter">1</span> 🌟
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Feedback -->
+        <div id="feedbackModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-3xl p-8 max-w-md mx-4 text-center bounce-in">
+                <div class="text-8xl mb-4" id="feedbackEmoji">🎉</div>
+                <h3 class="text-3xl font-bold text-gray-800 mb-4" id="feedbackTitle">Bagus!</h3>
+                <p class="text-xl text-gray-600 mb-6" id="feedbackText">Kamu hebat!</p>
+                <button onclick="closeFeedbackModal()" class="bg-purple-500 hover:bg-purple-600 text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors">
+                    Lanjut!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentWordIndex = 0;
+        let currentSentenceIndex = 0;
+        let selectedConsonant = 'B';
+        let selectedVoiceType = 'wavenet-a'; // Default suara wanita A
+
+        // Data kata-kata
+        const wordCategories = {
+            fruits: [
+                { word: 'APEL', emoji: '🍎' },
+                { word: 'PISANG', emoji: '🍌' },
+                { word: 'JERUK', emoji: '🍊' },
+                { word: 'ANGGUR', emoji: '🍇' },
+                { word: 'MANGGA', emoji: '🥭' }
+            ],
+            animals: [
+                { word: 'KUCING', emoji: '🐱' },
+                { word: 'ANJING', emoji: '🐶' },
+                { word: 'AYAM', emoji: '🐔' },
+                { word: 'IKAN', emoji: '🐟' },
+                { word: 'BURUNG', emoji: '🐦' }
+            ],
+            objects: [
+                { word: 'BUKU', emoji: '📚' },
+                { word: 'MEJA', emoji: '🪑' },
+                { word: 'BOLA', emoji: '⚽' },
+                { word: 'RUMAH', emoji: '🏠' },
+                { word: 'MOBIL', emoji: '🚗' }
+            ]
+        };
+
+        // Data kalimat
+        const sentences = [
+            'Ibu memasak di dapur',
+            'Ayah membaca buku',
+            'Adik bermain bola',
+            'Kucing minum susu',
+            'Burung terbang tinggi',
+            'Ikan berenang di air',
+            'Bunga mekar di taman',
+            'Anak pergi ke sekolah',
+            'Nenek duduk di kursi',
+            'Kakek menyiram tanaman'
+        ];
+
+        // Konsonan untuk suku kata
+        const consonants = ['B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'R', 'S', 'T', 'W', 'Y', 'Z'];
+        const vowels = ['A', 'I', 'U', 'E', 'O'];
+
+        // Konfigurasi suara Google Cloud AI
+        const voiceConfig = {
+            'wavenet-a': {
+                name: 'id-ID-Wavenet-A',
+                gender: 'female',
+                pitch: 1.3,
+                rate: 0.85,
+                description: 'Suara wanita Indonesia yang lembut dan jelas'
+            },
+            'wavenet-b': {
+                name: 'id-ID-Wavenet-B', 
+                gender: 'female',
+                pitch: 1.2,
+                rate: 0.9,
+                description: 'Suara wanita Indonesia yang energik dan ramah'
+            },
+            'wavenet-c': {
+                name: 'id-ID-Wavenet-C',
+                gender: 'male',
+                pitch: 0.9,
+                rate: 0.85,
+                description: 'Suara pria Indonesia yang tenang dan berwibawa'
+            },
+            'wavenet-d': {
+                name: 'id-ID-Wavenet-D',
+                gender: 'male', 
+                pitch: 1.0,
+                rate: 0.8,
+                description: 'Suara pria Indonesia yang hangat dan bersahabat'
+            }
+        };
+
+        // Fungsi pilih suara
+        function selectVoice(voiceType) {
+            selectedVoiceType = voiceType;
+            
+            // Update tampilan tombol
+            document.querySelectorAll('.voice-btn').forEach(btn => {
+                btn.classList.remove('border-4', 'border-pink-300', 'border-purple-300', 'border-blue-300', 'border-green-300');
+                btn.classList.remove('bg-pink-200', 'bg-purple-200', 'bg-blue-200', 'bg-green-200');
+            });
+            
+            const selectedBtn = document.getElementById(`voice-${voiceType}`);
+            if (voiceType === 'wavenet-a') {
+                selectedBtn.classList.add('border-4', 'border-pink-300', 'bg-pink-200');
+            } else if (voiceType === 'wavenet-b') {
+                selectedBtn.classList.add('border-4', 'border-purple-300', 'bg-purple-200');
+            } else if (voiceType === 'wavenet-c') {
+                selectedBtn.classList.add('border-4', 'border-blue-300', 'bg-blue-200');
+            } else if (voiceType === 'wavenet-d') {
+                selectedBtn.classList.add('border-4', 'border-green-300', 'bg-green-200');
+            }
+            
+            console.log(`🎤 Suara dipilih: ${voiceConfig[voiceType].description}`);
+        }
+
+        // Fungsi test suara
+        function testCurrentVoice() {
+            speakText('Halo, aku siap membantu belajar membaca!');
+        }
+
+        // Fungsi text-to-speech dengan deteksi suara yang lebih baik
+        function speakText(text, customRate = null) {
+            if (!('speechSynthesis' in window)) {
+                console.log('❌ Browser tidak mendukung text-to-speech');
+                showVoiceError();
+                return;
+            }
+
+            try {
+                speechSynthesis.cancel();
+                
+                const config = voiceConfig[selectedVoiceType];
+                const utterance = new SpeechSynthesisUtterance(text);
+                
+                // Set basic properties
+                utterance.lang = 'id-ID';
+                utterance.rate = customRate || config.rate;
+                utterance.pitch = config.pitch;
+                utterance.volume = 1.0;
+                
+                // Error handling
+                utterance.onerror = function(event) {
+                    console.log('❌ Error saat memutar suara:', event.error);
+                    showVoiceError();
+                };
+                
+                utterance.onstart = function() {
+                    console.log('🔊 Mulai memutar suara:', text);
+                };
+                
+                // Fungsi untuk set voice dengan fallback yang lebih baik
+                const setVoice = () => {
+                    const voices = speechSynthesis.getVoices();
+                    console.log('📋 Total suara tersedia:', voices.length);
+                    
+                    if (voices.length === 0) {
+                        console.log('⚠️ Tidak ada suara tersedia, menggunakan default');
+                        speechSynthesis.speak(utterance);
+                        return;
+                    }
+                    
+                    let selectedVoice = null;
+                    
+                    // Log semua suara untuk debugging
+                    voices.forEach((voice, index) => {
+                        console.log(`${index}: ${voice.name} (${voice.lang}) - ${voice.gender || 'unknown'}`);
+                    });
+                    
+                    // 1. Cari suara Indonesia (id-ID) - prioritas utama
+                    selectedVoice = voices.find(voice => 
+                        voice.lang === 'id-ID' && 
+                        (config.gender === 'female' ? 
+                            !voice.name.toLowerCase().includes('male') : 
+                            voice.name.toLowerCase().includes('male'))
+                    );
+                    
+                    // 2. Cari suara Indonesia (id) 
+                    if (!selectedVoice) {
+                        selectedVoice = voices.find(voice => 
+                            voice.lang === 'id' && 
+                            (config.gender === 'female' ? 
+                                !voice.name.toLowerCase().includes('male') : 
+                                voice.name.toLowerCase().includes('male'))
+                        );
+                    }
+                    
+                    // 3. Cari suara Indonesia tanpa filter gender
+                    if (!selectedVoice) {
+                        selectedVoice = voices.find(voice => 
+                            voice.lang === 'id-ID' || voice.lang === 'id'
+                        );
+                    }
+                    
+                    // 4. Cari berdasarkan nama yang mengandung "indonesia"
+                    if (!selectedVoice) {
+                        selectedVoice = voices.find(voice => 
+                            voice.name.toLowerCase().includes('indonesia') ||
+                            voice.name.toLowerCase().includes('indonesian')
+                        );
+                    }
+                    
+                    // 5. Cari Google voices
+                    if (!selectedVoice) {
+                        selectedVoice = voices.find(voice => 
+                            voice.name.toLowerCase().includes('google') &&
+                            (voice.lang.includes('id') || voice.name.toLowerCase().includes('indonesia'))
+                        );
+                    }
+                    
+                    // 6. Fallback ke suara Asia Tenggara
+                    if (!selectedVoice) {
+                        selectedVoice = voices.find(voice => 
+                            voice.lang.includes('ms-') || // Malaysia
+                            voice.lang.includes('th-') || // Thailand
+                            voice.lang.includes('vi-')    // Vietnam
+                        );
+                    }
+                    
+                    // 7. Fallback terakhir - suara English yang female/male sesuai config
+                    if (!selectedVoice) {
+                        selectedVoice = voices.find(voice => 
+                            voice.lang.includes('en-') &&
+                            (config.gender === 'female' ? 
+                                (voice.name.toLowerCase().includes('female') || 
+                                 voice.name.toLowerCase().includes('woman')) :
+                                (voice.name.toLowerCase().includes('male') || 
+                                 voice.name.toLowerCase().includes('man')))
+                        );
+                    }
+                    
+                    // 8. Fallback final - suara pertama yang tersedia
+                    if (!selectedVoice && voices.length > 0) {
+                        selectedVoice = voices[0];
+                    }
+                    
+                    if (selectedVoice) {
+                        utterance.voice = selectedVoice;
+                        console.log(`✅ Suara dipilih: ${selectedVoice.name} (${selectedVoice.lang})`);
+                        console.log(`🎤 ${config.description}`);
+                    } else {
+                        console.log('⚠️ Menggunakan suara default sistem');
+                    }
+                    
+                    // Speak dengan error handling
+                    try {
+                        speechSynthesis.speak(utterance);
+                    } catch (error) {
+                        console.log('❌ Error saat speak:', error);
+                        showVoiceError();
+                    }
+                };
+                
+                // Tunggu voices dimuat atau langsung jalankan
+                if (speechSynthesis.getVoices().length === 0) {
+                    console.log('⏳ Menunggu voices dimuat...');
+                    speechSynthesis.addEventListener('voiceschanged', setVoice, { once: true });
+                    
+                    // Timeout fallback jika voices tidak pernah dimuat
+                    setTimeout(() => {
+                        if (speechSynthesis.getVoices().length === 0) {
+                            console.log('⚠️ Timeout menunggu voices, menggunakan default');
+                            speechSynthesis.speak(utterance);
+                        }
+                    }, 2000);
+                } else {
+                    setVoice();
+                }
+                
+            } catch (error) {
+                console.log('❌ Error umum:', error);
+                showVoiceError();
+            }
+        }
+        
+        // Fungsi untuk menampilkan error suara
+        function showVoiceError() {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            errorDiv.innerHTML = '🔇 Suara tidak tersedia di browser ini';
+            document.body.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.parentNode.removeChild(errorDiv);
+                }
+            }, 3000);
+        }
+
+        // Inisialisasi konsonan
+        function initializeConsonants() {
+            const container = document.getElementById('consonantButtons');
+            const colors = [
+                'bg-red-200 hover:bg-red-300 text-red-800',
+                'bg-blue-200 hover:bg-blue-300 text-blue-800',
+                'bg-green-200 hover:bg-green-300 text-green-800',
+                'bg-yellow-200 hover:bg-yellow-300 text-yellow-800',
+                'bg-purple-200 hover:bg-purple-300 text-purple-800',
+                'bg-pink-200 hover:bg-pink-300 text-pink-800'
+            ];
+            
+            consonants.forEach((consonant, index) => {
+                const button = document.createElement('button');
+                const colorClass = colors[index % colors.length];
+                button.className = `${colorClass} text-3xl font-bold p-5 rounded-2xl transition-all duration-300 transform hover:scale-110 shadow-lg sparkle`;
+                button.textContent = consonant;
+                button.onclick = () => selectConsonant(consonant);
+                container.appendChild(button);
+            });
+        }
+
+        // Pilih konsonan dan tampilkan suku kata
+        function selectConsonant(consonant) {
+            selectedConsonant = consonant;
+            document.getElementById('selectedConsonant').textContent = consonant;
+            
+            // Update tampilan tombol
+            const buttons = document.querySelectorAll('#consonantButtons button');
+            buttons.forEach(btn => {
+                if (btn.textContent === consonant) {
+                    btn.className = 'bg-blue-500 text-white text-2xl font-bold p-4 rounded-2xl transition-all duration-300 transform scale-105';
+                } else {
+                    btn.className = 'bg-blue-100 hover:bg-blue-200 text-blue-800 text-2xl font-bold p-4 rounded-2xl transition-all duration-300 transform hover:scale-105';
+                }
+            });
+            
+            generateSyllables(consonant);
+        }
+
+        // Generate suku kata
+        function generateSyllables(consonant) {
+            const container = document.getElementById('syllableGrid');
+            container.innerHTML = '';
+            
+            const syllableColors = [
+                'bg-gradient-to-br from-red-200 to-red-300 hover:from-red-300 hover:to-red-400 text-red-800',
+                'bg-gradient-to-br from-blue-200 to-blue-300 hover:from-blue-300 hover:to-blue-400 text-blue-800',
+                'bg-gradient-to-br from-green-200 to-green-300 hover:from-green-300 hover:to-green-400 text-green-800',
+                'bg-gradient-to-br from-yellow-200 to-yellow-300 hover:from-yellow-300 hover:to-yellow-400 text-yellow-800',
+                'bg-gradient-to-br from-purple-200 to-purple-300 hover:from-purple-300 hover:to-purple-400 text-purple-800'
+            ];
+            
+            vowels.forEach((vowel, index) => {
+                const syllable = consonant + vowel;
+                const button = document.createElement('button');
+                const colorClass = syllableColors[index];
+                button.className = `${colorClass} text-5xl font-bold p-8 rounded-3xl shadow-xl transition-all duration-300 transform hover:scale-110 glow sparkle`;
+                button.textContent = syllable;
+                button.onclick = () => {
+                    button.classList.add('pulse-big');
+                    speakText(syllable);
+                    setTimeout(() => button.classList.remove('pulse-big'), 600);
+                };
+                container.appendChild(button);
+            });
+        }
+
+        // Baca semua suku kata
+        function readAllSyllables() {
+            const syllables = vowels.map(vowel => selectedConsonant + vowel);
+            let index = 0;
+            
+            function readNext() {
+                if (index < syllables.length) {
+                    speakText(syllables[index]);
+                    
+                    // Highlight suku kata yang sedang dibaca
+                    const buttons = document.querySelectorAll('#syllableGrid button');
+                    buttons.forEach(btn => btn.classList.remove('bg-yellow-200'));
+                    if (buttons[index]) {
+                        buttons[index].classList.add('bg-yellow-200', 'pulse-big');
+                        setTimeout(() => {
+                            buttons[index].classList.remove('pulse-big');
+                        }, 600);
+                    }
+                    
+                    index++;
+                    setTimeout(readNext, 1500);
+                }
+            }
+            
+            readNext();
+        }
+
+        // Inisialisasi kata-kata
+        function initializeWords() {
+            // Buah-buahan
+            const fruitContainer = document.getElementById('fruitWords');
+            wordCategories.fruits.forEach(item => {
+                const button = createWordButton(item.word, item.emoji, 'bg-red-100 hover:bg-red-200 text-red-800');
+                fruitContainer.appendChild(button);
+            });
+            
+            // Hewan
+            const animalContainer = document.getElementById('animalWords');
+            wordCategories.animals.forEach(item => {
+                const button = createWordButton(item.word, item.emoji, 'bg-yellow-100 hover:bg-yellow-200 text-yellow-800');
+                animalContainer.appendChild(button);
+            });
+            
+            // Benda
+            const objectContainer = document.getElementById('objectWords');
+            wordCategories.objects.forEach(item => {
+                const button = createWordButton(item.word, item.emoji, 'bg-green-100 hover:bg-green-200 text-green-800');
+                objectContainer.appendChild(button);
+            });
+        }
+
+        function createWordButton(word, emoji, colorClass) {
+            const button = document.createElement('button');
+            button.className = `${colorClass} p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 w-full text-center shadow-lg sparkle card-hover`;
+            button.innerHTML = `
+                <div class="text-4xl mb-2 bounce-gentle">${emoji}</div>
+                <div class="text-xl font-bold">${word}</div>
+            `;
+            button.onclick = () => {
+                button.classList.add('pulse-big');
+                speakText(word);
+                setTimeout(() => button.classList.remove('pulse-big'), 600);
+            };
+            return button;
+        }
+
+        // Latihan kata
+        function getAllWords() {
+            return [
+                ...wordCategories.fruits,
+                ...wordCategories.animals,
+                ...wordCategories.objects
+            ];
+        }
+
+        function updatePracticeWord() {
+            const allWords = getAllWords();
+            const currentWord = allWords[currentWordIndex];
+            document.getElementById('wordEmoji').textContent = currentWord.emoji;
+            document.getElementById('practiceWord').textContent = currentWord.word;
+            document.getElementById('wordCounter').textContent = currentWordIndex + 1;
+        }
+
+        function readCurrentWord() {
+            const allWords = getAllWords();
+            const currentWord = allWords[currentWordIndex];
+            speakText(currentWord.word);
+        }
+
+        function nextPracticeWord() {
+            const allWords = getAllWords();
+            currentWordIndex = (currentWordIndex + 1) % allWords.length;
+            updatePracticeWord();
+            
+            // Auto-read new word
+            setTimeout(() => readCurrentWord(), 500);
+        }
+
+        // Inisialisasi kalimat
+        function initializeSentences() {
+            const container = document.getElementById('sentencesList');
+            sentences.forEach((sentence, index) => {
+                const div = document.createElement('div');
+                div.className = 'bg-purple-50 rounded-xl p-4 flex items-center justify-between hover:bg-purple-100 transition-colors';
+                div.innerHTML = `
+                    <span class="text-lg font-semibold text-purple-800">${index + 1}. ${sentence}</span>
+                    <button onclick="speakText('${sentence}')" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-full transition-colors">
+                        🔊
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updatePracticeSentence() {
+            const currentSentence = sentences[currentSentenceIndex];
+            document.getElementById('practiceSentence').textContent = currentSentence;
+            document.getElementById('sentenceCounter').textContent = currentSentenceIndex + 1;
+        }
+
+        function readCurrentSentence() {
+            const currentSentence = sentences[currentSentenceIndex];
+            speakText(currentSentence);
+        }
+
+        function readSentenceSlowly() {
+            const currentSentence = sentences[currentSentenceIndex];
+            speakText(currentSentence, 0.4); // Lebih lambat
+        }
+
+        function nextPracticeSentence() {
+            currentSentenceIndex = (currentSentenceIndex + 1) % sentences.length;
+            updatePracticeSentence();
+            
+            // Auto-read new sentence
+            setTimeout(() => readCurrentSentence(), 500);
+        }
+
+        // Modal feedback
+        function showFeedback(title, text, emoji) {
+            document.getElementById('feedbackEmoji').textContent = emoji;
+            document.getElementById('feedbackTitle').textContent = title;
+            document.getElementById('feedbackText').textContent = text;
+            document.getElementById('feedbackModal').classList.remove('hidden');
+            
+            setTimeout(() => speakText(text), 300);
+        }
+
+        function closeFeedbackModal() {
+            document.getElementById('feedbackModal').classList.add('hidden');
+        }
+
+        // Navigasi antar bagian
+        function showSection(section) {
+            document.getElementById('mainMenu').classList.add('hidden');
+            document.getElementById('syllables').classList.add('hidden');
+            document.getElementById('words').classList.add('hidden');
+            document.getElementById('sentences').classList.add('hidden');
+            
+            if (section === 'main') {
+                document.getElementById('mainMenu').classList.remove('hidden');
+            } else {
+                document.getElementById(section).classList.remove('hidden');
+            }
+        }
+
+        // Inisialisasi aplikasi
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeConsonants();
+            initializeWords();
+            initializeSentences();
+            selectConsonant('B'); // Default konsonan
+            updatePracticeWord();
+            updatePracticeSentence();
+            selectVoice('wavenet-a'); // Default suara wanita A
+            
+            // Ucapkan selamat datang
+            setTimeout(() => speakText('Selamat datang di Ayo Baca! Mari belajar membaca bersama!'), 1000);
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98aa65fd46633f31',t:'MTc1OTgwODY1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
